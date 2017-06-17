@@ -33,7 +33,7 @@ func main() {
 }
 
 //INIT
-func (t *SimpleChaincode) InitUser(stub shim.ChaincodeStubInterface, args []string) error {
+func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, args []string) error {
 	key := UserPrefix + args[0]
         
 	if len(args) != 2 {
