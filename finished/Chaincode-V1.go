@@ -1,29 +1,22 @@
 package main
 
-import(
-"errors"
-"fmt"
-"github.com/hyperledger/fabric/core/chaincode/shim"
-"encoding/json"
-
-) 
-
-const (
-	UserPrefix	= "USER_"
-	
+import ( 
+             "encoding/json"
+            "strings"
+	"errors"
+	"fmt"
+	"github.com/hyperledger/fabric/core/chaincode/shim"
 )
-
- type Patient struct {
-                Username  string  `json:"Username"`
-                Name      string  `json:"Name"`
-                DescriptionOfCurrentAilment  string  `json:"DescriptionOfCurrentAilment"`
-                Allergies string  `json:"Allergies"`
- 
+//Patient Struct
+  type Patient struct {
+                Username   string  `json:"Username"`
+                Name     string  `json:"Name"`
+                DescriptionOfCurrentAilment     string  `json:"DescriptionOfCurrentAilment"`
+                Allergies      string  `json:"Allergies"`
             }
- 
+
 type SimpleChaincode struct {
 }
-
 
 func main() {
 	err := shim.Start(new(SimpleChaincode))
@@ -31,70 +24,69 @@ func main() {
 		fmt.Printf("Error starting Simple chaincode: %s", err)
 	}
 }
-
-//INIT
-func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, args []string) error {
-	key := UserPrefix + args[0]
-        
-	if len(args) != 2 {
-		return errors.New("Incorrect number of arguments. Expecting 2")
+//Init
+func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
+key := UserPrefix + args[0]
+	if len(args) != 2{
+		return nil, errors.New("Incorrect number of arguments. Expecting 1")
 	}
-
 	err := stub.PutState(key, []byte(args[1]))
+fmt.Println("store user:%s sucessfully", args[0])
+fmt.Printf("your username is:%s",key)
 	if err != nil {
-		fmt.Errorf(err.Error())
-		return err
+		return nil, err
 	}
-	fmt.Printf("store user:%s sucessfully", key)
-	return nil
+	return nil, nil
+}
+//write
+func (t *SimpleChaincode) write(stub shim.ChaincodeStubInterface,Patient patient) ([]byte, error) {
+	var key string
+	var err error
+	fmt.Println("running write()")
+
+	key = patient.username //rename for funsies
+	//value =( patient.name).append(patient. DescriptionOfCurrentAilment).append(Allergies)
+Value []byte
+value[0] =patient.name
+value[1] =patient. DescriptionOfCurrentAilment
+value[2] =patient. Allergies
+	err = stub.PutState(key, value) //write the variable into the chaincode state
+	if err != nil {
+		return nil, err
+	}
+	return nil, nil
 }
 
-//WRITE
-
-func (t *SimpleChaincode) write(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
-                var err error
-                var rtype string
-                fmt.Println("running write()")
- 
-                if len(args) != 4{
-                                return nil, errors.New("Incorrect number of arguments. Expecting 2. name of the key and value to set")
-                }
- 
-                m_patient := &Patient{}
-                m_patient.Username = args[0]
-                m_patient.Name = args[1]
-                m_patient.DescriptionOfCurrentAilment= args[2]
-                 m_patient.Allergies=args[3]
- 
-                var key = args[0]
- 
-                value, err := json.Marshal(&m_patient)
- 
-                if err != nil {
-                                return nil, err
-                }
- 
-                err = stub.PutState(key, []byte(value)) //write the variable into the chaincode state
-                if err != nil {
-                                return nil, err
-                }
-                return nil, nil
-}
-
-//INVOKE
+//Invoke
 func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
-	fmt.Println("invoke is running " + function)
+	switch function {
+	case "Init": if len(args) != 2 {
+			return nil, errors.New("Incorrect number of arguments in addUser: expect 2")
+		}
+		username := args[0]
+		value := args[1]
+		err := t.Init (stub, username, value)
+		if err != nil {
+			fmt.Println("addUser error: ", err)
+		}
+		return nil, err
 
-	// Handle different functions
-	if function == "init" {
-		return t.Init(stub, args)
-	} else if function == "write" {
-		return t.write(stub, args)
+case "write":
+patient  := &Patient{}
+patient.Username  := args[0]
+ patient.Name   := args[1]
+   patient.DescriptionOfCurrentAilment := args[2]
+    patient.Allergies :=args[3]  
+if ((patient.Username="")&& (patient.name="")&&(patient. DescriptionOfCurrentAilment ="" )){
+		return nil, errors.New("Incorrect number of arguments. Expecting 2. name of the key and value to set")
 	}
-	fmt.Println("invoke did not find func: " + function)
-
-	return nil, errors.New("Received unknown function invocation: " + function)
+err := t.write (stub, patient)
+		if err != nil {
+			fmt.Println("error: ", err)
+		}
+return nil, err
 }
+
 
 
 
