@@ -91,6 +91,7 @@ err = t.write (stub, patient)
 		}
 return nil, err
 }
+}
 
 
 
