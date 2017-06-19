@@ -73,15 +73,12 @@ value[2] =(byte)patient.Allergies
 
 //Invoke
 func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
-	var username string
-	var value string
-	var err error
+	
 	switch function {
 	case "Init": if len(args) != 2 {
 			return nil, errors.New("Incorrect number of arguments in addUser: expect 2")
 		}
-		username = args[0]
-		value = args[1]
+		
 		t.Init(stub, "init", args)
 		  
 		return nil, nil
