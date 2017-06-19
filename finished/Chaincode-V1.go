@@ -51,14 +51,22 @@ func (t *SimpleChaincode) write(stub shim.ChaincodeStubInterface,patient Patient
 
 	key = patient.Username //rename for funsies
 	//value =( patient.name).append(patient. DescriptionOfCurrentAilment).append(Allergies)
-var value []byte
-value[0] =patient.Name
-value[1] =patient.DescriptionOfCurrentAilment
-value[2] =patient.Allergies
-	err = stub.PutState(key, value) //write the variable into the chaincode state
+/*var value []byte
+	value
+	value[0] =(byte)patient.Name
+value[1] =(byte)patient.DescriptionOfCurrentAilment
+value[2] =(byte)patient.Allergies
+	
+	err = stub.PutState(key, value) *///write the variable into the chaincode state
+	value, err := json.Marshal(&patient)
+	
 	if err != nil {
 		return nil, err
 	}
+	err = stub.PutState(key, []byte(value))
+	if err != nil {
+                                return nil, err
+                }
 	return nil, nil
 }
 
