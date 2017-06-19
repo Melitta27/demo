@@ -111,9 +111,8 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 	return nil, errors.New("Received unknown function query: " + function)
 }
 func (t *SimpleChaincode) read(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
-	var key, jsonResp string
+	var key,key1, jsonResp string
 	var err error
-	var key1 string
 	var length int 
 	
 	if len(args) != 1 {
