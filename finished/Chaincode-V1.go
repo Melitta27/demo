@@ -65,7 +65,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 		}
 		username := args[0]
 		value := args[1]
-		err := t.Init (stub, username, value)
+		err := t.Init (stub, "init", args)
 		if err != nil {
 			fmt.Println("addUser error: ", err)
 		}
