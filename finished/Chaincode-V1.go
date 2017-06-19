@@ -48,7 +48,7 @@ func (t *SimpleChaincode) write(stub shim.ChaincodeStubInterface,Patient patient
 
 	key = patient.username //rename for funsies
 	//value =( patient.name).append(patient. DescriptionOfCurrentAilment).append(Allergies)
-Value []byte
+value []byte
 value[0] =patient.name
 value[1] =patient. DescriptionOfCurrentAilment
 value[2] =patient. Allergies
@@ -82,7 +82,7 @@ patient.Username  = args[0]
  patient.Name   = args[1]
    patient.DescriptionOfCurrentAilment = args[2]
     patient.Allergies =args[3]  
-if ((patient.Username="")&& (patient.name="")&&(patient. DescriptionOfCurrentAilment ="" )){
+if ((patient.Username="")&& (patient.name="")&&(patient.DescriptionOfCurrentAilment ="" )){
 		return nil, errors.New("Incorrect number of arguments. Expecting 2. name of the key and value to set")
 	}
 err = t.write (stub, patient)
