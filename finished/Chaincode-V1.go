@@ -32,13 +32,13 @@ func main() {
 func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
 	var key string
 	var err error
-key = UserPrefix + args[0]
+         key = UserPrefix + args[0]
 	if len(args) != 2{
 		return nil, errors.New("Incorrect number of arguments. Expecting 1")
 	}
 	err = stub.PutState(key, []byte(args[1]))
-fmt.Println("store user:%s sucessfully", args[0])
-fmt.Printf("your username is:%s",key)
+        fmt.Println("store user:%s sucessfully", args[0])
+        fmt.Printf("your username is:%s",key)
 	if err != nil {
 		return nil, err
 	}
@@ -88,22 +88,26 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 		}
 		return nil, err
 
-case "write":
+       case "write":
 		//patient  := &Patient{}
 		var patient Patient
-patient.Username  = args[0]
- patient.Name   = args[1]
-   patient.DescriptionOfCurrentAilment = args[2]
-    patient.Allergies =args[3]  
-if ((patient.Username =="") && (patient.Name=="") &&(patient.DescriptionOfCurrentAilment =="" )){
-		return nil, errors.New("Incorrect number of arguments. Expecting 2. name of the key and value to set")
-	}
-err = t.write(stub, patient)
+                patient.Username  = args[0]
+                patient.Name   = args[1]
+                patient.DescriptionOfCurrentAilment = args[2]
+                patient.Allergies =args[3]  
+                if ((patient.Username =="") && (patient.Name=="") &&(patient.DescriptionOfCurrentAilment =="" )){
+		     return nil, errors.New("Incorrect number of arguments. Expecting 2. name of the key and value to set")
+	        }
+                err = t.write(stub, patient)
 		if err != nil {
 			fmt.Println("error: ", err)
 		}
-return nil, err
-}
+               return nil, err
+        default:
+		errMsg := "No such method in Invoke method: " + function
+		fmt.Errorf(errMsg)
+		return nil, errors.New(errMsg)
+        }
 	return nil,nil
 }
 func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
