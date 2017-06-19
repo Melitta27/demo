@@ -82,7 +82,7 @@ patient.Username  = args[0]
  patient.Name   = args[1]
    patient.DescriptionOfCurrentAilment = args[2]
     patient.Allergies =args[3]  
-if ((patient.Username =="")&& (patient.name=="")&&(patient.DescriptionOfCurrentAilment =="" )){
+if ((patient.Username =="") && (patient.Name=="") &&(patient.DescriptionOfCurrentAilment =="" )){
 		return nil, errors.New("Incorrect number of arguments. Expecting 2. name of the key and value to set")
 	}
 err = t.write (stub, patient)
