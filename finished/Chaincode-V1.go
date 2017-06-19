@@ -44,7 +44,7 @@ fmt.Printf("your username is:%s",key)
 	return nil, nil
 }
 //write
-func (t *SimpleChaincode) write(stub shim.ChaincodeStubInterface,Patient patient) ([]byte, error) {
+func (t *SimpleChaincode) write(stub shim.ChaincodeStubInterface,patient Patient) ([]byte, error) {
 	var key string
 	var err error
 	fmt.Println("running write()")
