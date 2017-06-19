@@ -48,7 +48,7 @@ func (t *SimpleChaincode) write(stub shim.ChaincodeStubInterface,Patient patient
 
 	key = patient.Username //rename for funsies
 	//value =( patient.name).append(patient. DescriptionOfCurrentAilment).append(Allergies)
-value []byte
+var value []byte
 value[0] =patient.Name
 value[1] =patient.DescriptionOfCurrentAilment
 value[2] =patient.Allergies
