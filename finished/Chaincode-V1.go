@@ -82,9 +82,9 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 		}
 		username = args[0]
 		value = args[1]
-		err = t.Init(stub, "init", args)
-		if err != nil {
-			fmt.Println("addUser error: ", err)
+		err := t.Init(stub, "init", args)
+		   if err != nil {
+			fmt.Println("addUsererror: ", err)
 		}
 		return nil, err
 
@@ -98,7 +98,7 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
                 if ((patient.Username =="") && (patient.Name=="") &&(patient.DescriptionOfCurrentAilment =="" )){
 		     return nil, errors.New("Incorrect number of arguments. Expecting 2. name of the key and value to set")
 	        }
-                err = t.write(stub, patient)
+		err := t.write(stub, patient)
 		if err != nil {
 			fmt.Println("error: ", err)
 		}
