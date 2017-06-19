@@ -7,6 +7,11 @@ import (
 	"fmt"
 	"github.com/hyperledger/fabric/core/chaincode/shim"
 )
+const (
+	UserPrefix	= "USER_"
+	
+)
+
 //Patient Struct
   type Patient struct {
                 Username   string  `json:"Username"`
