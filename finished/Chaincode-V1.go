@@ -89,7 +89,8 @@ func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function stri
 		return nil, err
 
 case "write":
-		patient  := &Patient{}
+		//patient  := &Patient{}
+		var patient Patient
 patient.Username  = args[0]
  patient.Name   = args[1]
    patient.DescriptionOfCurrentAilment = args[2]
