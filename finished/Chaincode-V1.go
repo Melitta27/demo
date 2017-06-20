@@ -31,7 +31,6 @@ func main() {
 }
 //Init
 func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
-	var key string
 	var err error
 	key := UserPrefix + args[0]
 	if len(args) != 2{
