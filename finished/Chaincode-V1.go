@@ -60,8 +60,9 @@ value[2] =(byte)patient.Allergies
 	if err != nil {
 		return nil, err
 	}
-	err = stub.PutState(key, []byte(value))	if err != nil {
-                                return nil, err
+	err = stub.PutState(key, []byte(value))	
+	if err != nil {
+                        return nil, err
                 }
 	return nil, nil
 }
