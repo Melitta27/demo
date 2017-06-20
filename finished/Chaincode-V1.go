@@ -6,6 +6,11 @@ import (
 	"fmt"
 	"github.com/hyperledger/fabric/core/chaincode/shim"
 )
+const ( 
+	UserPrefix	= "USER_" 
+ 	 
+ ) 
+
 
 //Patient Struct
   type Patient struct {
@@ -28,7 +33,7 @@ func main() {
 func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
 	var key string
 	var err error
-         key = args[0]
+	key := UserPrefix + args[0]
 	if len(args) != 2{
 		return nil, errors.New("Incorrect number of arguments. Expecting 1")
 	}
