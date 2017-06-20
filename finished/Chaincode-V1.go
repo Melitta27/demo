@@ -45,33 +45,6 @@ func (t *SimpleChaincode) Init(stub shim.ChaincodeStubInterface, function string
 	}
 	return nil, nil
 }
-//write
-func (t *SimpleChaincode) write(stub shim.ChaincodeStubInterface,patient Patient) ([]byte, error) {
-	var key string
-	var err error
-	fmt.Println("running write()")
-
-	key = patient.Username //rename for funsies
-	//value =( patient.name).append(patient. DescriptionOfCurrentAilment).append(Allergies)
-/*var value []byte
-	value
-	value[0] =(byte)patient.Name
-value[1] =(byte)patient.DescriptionOfCurrentAilment
-value[2] =(byte)patient.Allergies
-	
-	err = stub.PutState(key, value) *///write the variable into the chaincode state
-	value, err := json.Marshal(&patient)
-	
-	if err != nil {
-		return nil, err
-	}
-	err = stub.PutState(key, []byte(value))	
-	if err != nil {
-                        return nil, err
-                }
-	return nil, nil
-}
-
 //Invoke
 func (t *SimpleChaincode) Invoke(stub shim.ChaincodeStubInterface, function string, args []string) ([]byte, error) {
 	
@@ -115,6 +88,34 @@ func (t *SimpleChaincode) Query(stub shim.ChaincodeStubInterface, function strin
 
 	return nil, errors.New("Received unknown function query: " + function)
 }
+//write
+func (t *SimpleChaincode) write(stub shim.ChaincodeStubInterface,patient Patient) ([]byte, error) {
+	var key string
+	var err error
+	fmt.Println("running write()")
+
+	key = patient.Username //rename for funsies
+	//value =( patient.name).append(patient. DescriptionOfCurrentAilment).append(Allergies)
+/*var value []byte
+	value
+	value[0] =(byte)patient.Name
+value[1] =(byte)patient.DescriptionOfCurrentAilment
+value[2] =(byte)patient.Allergies
+	
+	err = stub.PutState(key, value) *///write the variable into the chaincode state
+	value, err := json.Marshal(&patient)
+	
+	if err != nil {
+		return nil, err
+	}
+	err = stub.PutState(key, []byte(value))	
+	if err != nil {
+                        return nil, err
+                }
+	return nil, nil
+}
+
+
 func (t *SimpleChaincode) read(stub shim.ChaincodeStubInterface, args []string) ([]byte, error) {
 	var key, jsonResp string
 	var err error
